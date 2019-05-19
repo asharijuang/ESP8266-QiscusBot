@@ -1,6 +1,9 @@
 /*******************************************************************
  *  this is a basic example how to program a Qiscus Bot            *
- *  using QiscusBOT library on ESP8266                             *                                                                
+ *  using QiscusBOT library on ESP8266                             *
+ *                                                                 *
+ *  Open a conversation with the bot, it will echo your messages   *
+ *  https://web.telegram.org/#/im?p=@EchoBot_bot                   *                                                                 
  *                                                                 *
  *  written by Ashari Juang                                        *
  *******************************************************************/
@@ -13,31 +16,18 @@
 
 // Initialize Wifi connection to the router
 // your network SSID (name)
-char ssid[] = "*********";
+char ssid[] = "*******";
 // your network key              
-char password[] = "*****";                             
+char password[] = "********";                             
 
 // Initialize Qiscus BOT
-#define QiscusToken "*************"
-#define QiscusAppID "*************"
-#define QiscusUserID "************"
+#define QiscusToken "********"
+#define QiscusAppID "********"
+#define QiscusUserID "*********"
 QiscusBOT bot(QiscusToken, QiscusAppID, QiscusUserID);
 
-int Bot_mtbs = 1800; //mean time between scan messages
+int Bot_mtbs = 3600; //mean time between scan messages
 long Bot_lasttime;   //last time messages' scan has been done
-
-
-/********************************************
- * EchoMessages - function to Echo messages *
- ********************************************/
-void Bot_EchoMessages() {
-
-  for (int i = 1; i < bot.message[0][0].toInt() + 1; i++)      {
-    bot.sendMessage(bot.message[i][4], bot.message[i][5], "");
-  }
-  bot.message[0][0] = "";   // All messages have been replied - reset new messages
-}
-
 
 void setup() {
 
@@ -64,18 +54,10 @@ void setup() {
 }
 
 
-
 void loop() {
 
   if (millis() > Bot_lasttime + Bot_mtbs)  {
     bot.sync();
     Bot_lasttime = millis();
-    Serial.println("millis");
-    Serial.println(Bot_lasttime);
-    Serial.println(bot._lastMessageId);
   }
 }
-
-
-
-
