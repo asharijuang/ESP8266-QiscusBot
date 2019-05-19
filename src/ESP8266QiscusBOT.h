@@ -45,4 +45,12 @@ class QiscusBOT
     HTTPClient http;
 };
 
+struct Message {
+  String message;
+  String id;
+  String roomId;
+  String senderName;
+  String senderEmail;
+};
+
 #endif

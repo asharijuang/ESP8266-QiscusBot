@@ -7,7 +7,7 @@ Application written by [Ashari Juang](https://github.com/asharijuang)
 
 ## Introduction
 
-This library provides an interface for [Qiscus Chat SDK] API like ✌🏼. You can list some network request from kiwari.chat(inspect element).
+This library provides an interface for [Qiscus Chat] API like [Unofficial] ✌🏼. You can list some network request from kiwari.chat(inspect element).
 
 It is possible to define your personal account as bot, make it able to read and write message. 
 
