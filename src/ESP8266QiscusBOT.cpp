@@ -98,22 +98,26 @@ void QiscusBOT::sync()  {
 
   JsonArray comments = doc["results"]["comments"];
   for(JsonObject comment : comments){
-    long messageID = comment["id"];
-    const char* message = comment["message"];
-    const char* roomId = comment["room_id_str"];
-    const char* sender = comment["username"];
-    const char* email = comment["email"];
+    long _messageID = comment["id"];
+    const char* _message = comment["message"];
+    const char* _roomId = comment["room_id_str"];
+    const char* _sender = comment["username"];
+    const char* _email = comment["email"];
 
     Message m;
-    m.roomId = roomId;
-    m.sender = sender;
-    m.message = message;
-    m.email = email;
+    m.roomId = _roomId;
+    m.sender = _sender;
+    m.message = _message;
+    m.email = _email;
+    m.id = _messageID;
 
-    if (user.userId != email) {
-      analizeMessage(m);  
+    if (user.userId != _email) {
+      // messages[0] = m;  
+      message = m;
+    }else {
+      Serial.println("ignore this message: "+m.message);
     }
-    _lastMessageId=String(messageID);
+    _lastMessageId=String(_messageID);
   }
 }
 
@@ -132,27 +136,3 @@ bool QiscusBOT::postMessage(Message m) {
   Serial.println("Post Message: "+m.message);
   return result;
 }
-
-/******************************************************************************
- * AnalizeMessage - function to detect message and analize behaviour *
- ******************************************************************************/
-void QiscusBOT::analizeMessage(Message m) {
-  Serial.println("AnalizeMessage: "+ m.message);
-
-  if (m.message.indexOf("@juang") >=0) {
-    String hello = "hello "+ m.sender + ". My name is hijuju, i am juang assistant.";
-    m.message = hello;
-    postMessage(m);
-    String hijuju = "Please mention me @hijuju if you want to talk with me.";
-    m.message = hijuju;
-    postMessage(m);
-  }
-
-  if (m.message.indexOf("@hijuju") >=0) {
-    String hello = "hi "+ m.sender +", nice to see u. i'm still learning right now.";
-    Serial.println(hello);
-    m.message = hello;
-    postMessage(m);
-  }
-}
-

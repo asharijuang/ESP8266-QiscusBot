@@ -37,6 +37,8 @@ class QiscusBOT
 {
   public:
     QiscusBOT (String, String, String);
+    // Message messages[HANDLE_MESSAGES];
+    Message message;
     void begin(void);
   	void getUpdates(String offset);
     bool postMessage(Message m);
