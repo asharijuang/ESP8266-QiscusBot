@@ -93,7 +93,7 @@ void QiscusBOT::sync()  {
   if (error) {
     Serial.println(F("deserializeJson() failed: "));
     Serial.println(error.c_str());
-    // return;
+    return;
   }
 
   JsonArray comments = doc["results"]["comments"];
@@ -111,10 +111,15 @@ void QiscusBOT::sync()  {
     m.email = _email;
     m.id = _messageID;
 
-    if (user.userId != _email) {
-      // messages[0] = m;  
+    Message empty;
+    empty.id = 0;
+    empty.message = "";
+    empty.sender = "";
+
+    if (user.userId != _email) { 
       message = m;
     }else {
+      message = empty;
       Serial.println("ignore this message: "+m.message);
     }
     _lastMessageId=String(_messageID);
